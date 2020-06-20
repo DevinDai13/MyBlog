@@ -6,9 +6,9 @@ from . import views
 # django looks for the first one that matches in the list
 urlpatterns = [
     path('', views.post_list, name='post list'), # list is the default page so no path extension
-    path('create/', views.post_create, name='post create'),
-    path('detail/', views.post_detail, name='post detail'),
-    path('update/', views.post_update, name='post update'),
-    path('delete/', views.post_delete, name='post delete'),
+    path('create/', views.post_create, name='post_create'), # with the name attribute, we can just reference the name 
+    path('<int:id>/', views.post_detail, name='post_detail'),
+    path('update/', views.post_update, name='post_update'),
+    path('delete/', views.post_delete, name='post_delete'),
 
 ]

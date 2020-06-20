@@ -4,7 +4,7 @@ from .models import Post
 # django model admin documentation 
 class PostModelAdmin(admin.ModelAdmin):
     list_display = ("__str__", "timestamp") # for custimizing the dispolay of admin page
-    list_filter = ["last_updated", "timestamp"]
+    list_filter = ["timestamp"]
     search_fields = ["title", "content"]
     class Meta:
         model = Post

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404 
 from django.http import HttpResponse
 from .models import Post
+from .forms import PostForm
 
 def post_list(request):
     queryset = Post.objects.all()
@@ -17,10 +18,20 @@ def post_list(request):
     #return HttpResponse("<h1>Main</h1>")
 
 def post_create(request):
-    return HttpResponse("<h1>create</h1>")
+    form = PostForm(request.POST or None)
+    #if (request.method == 'POST'):
+    #    print(request.POST.get("title"))
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+    
+    context_data = {
+        "form":form,
+    }
+    return render(request, "form.html", context_data)
 
-def post_detail(request):
-    instance = get_object_or_404(Post, id=1) # this is the query that we used to access the database
+def post_detail(request, id=None): #named paramter
+    instance = get_object_or_404(Post, id=id) # this is the query that we used to access the database
     context_data = {
         "title":instance.title,
         "instance":instance
