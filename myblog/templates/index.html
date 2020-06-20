@@ -1,0 +1,17 @@
+<!--DOCTYPE html-->
+<html>
+
+<body>
+    <h1>{{title}}</h1>
+    
+    {% for obj in post_list%}
+    {{obj.id}}</br>
+    {{obj.title}}</br>
+    {{obj.content}}</br>
+    {{obj.timestamp}}</br>
+    {{obj.updated_data}}</br>
+
+    {%endfor%}
+    
+</body>
+</html>
