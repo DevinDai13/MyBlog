@@ -17,9 +17,14 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import path, include, re_path
 from django.conf.urls import url
+from django.conf import settings 
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')), # include all path from posts
-
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
