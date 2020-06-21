@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from django.urls import reverse
 from .models import Post
 from .forms import PostForm
@@ -9,8 +10,13 @@ from .forms import PostForm
 def post_list(request):
     queryset = Post.objects.all().order_by("-timestamp") # order from most recent to oldest negative timestamp
     paginator = Paginator(queryset, 5) # Show 5 per page
-    page_number = request.GET.get('page')
-    post_list = paginator.get_page(page_number)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
 
     if (request.user.is_authenticated):
         context_data = {
