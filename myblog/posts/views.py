@@ -10,7 +10,8 @@ from .forms import PostForm
 def post_list(request):
     queryset = Post.objects.all().order_by("-timestamp") # order from most recent to oldest negative timestamp
     paginator = Paginator(queryset, 5) # Show 5 per page
-    page = request.GET.get('page')
+    page_request_var = 'page'
+    page = request.GET.get(page_request_var)
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -22,6 +23,7 @@ def post_list(request):
         context_data = {
             "post_list":queryset,
             "title":"List"
+            "page_request_var"
         }
     else:
         context_data = {
@@ -31,7 +33,7 @@ def post_list(request):
     return render(request, "base.html", context_data)
 
 def post_create(request):
-    form = PostForm(request.POST or None)
+    form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
@@ -52,7 +54,7 @@ def post_detail(request, id=None): #named paramter
 
 def post_update(request, id=None):
     instance = get_object_or_404(Post, id=id) # this is the query that we used to access the database
-    form = PostForm(request.POST or None, instance=instance)
+    form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()

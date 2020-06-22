@@ -127,3 +127,4 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn") # static files which include -- img, js, css
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn") # for uploading images fiorm users
+MEDIA_URL = "/media/"
