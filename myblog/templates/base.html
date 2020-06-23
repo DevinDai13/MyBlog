@@ -53,11 +53,11 @@
     <div class="col-sm-6 col-sm-offset-3">
       <div class="thumbnail">
         {%if obj.image%}
-          <img src='{{obj.image.url}}' alt="Unable to display image" class="post_image" width="620" height="400" style="margin:0px 10px"/>
+          <img src='{{obj.image.url}}' alt="Unable to display image" class="post_image" width="700" height="400" style="margin:0px 10px"/>
         {%endif%}
         <div class="caption">
           <h3>{{obj.title}}</a> <small>posted {{obj.timestamp | timesince}} ago by {{obj.user}}</small></h3>
-          <p>Content: {{obj.content | linebreaks | truncatechars:150}}</p>
+          <p>Content: {{obj.content | truncatechars:150 | linebreaks}}</p>
           <p><a href="{% url 'post_detail' obj.id %}" class="btn btn-primary" role="button">View detail</a> <a href="{% url 'post_edit' obj.id %}" class="btn btn-default" role="button">Edit post</a>
             <a href="{% url 'post_delete' obj.id %}" class="btn btn-primary" role="button">Delete</a></p>
         </div>
@@ -66,29 +66,34 @@
   </div>
 {%endfor%}
 
-<div class="col-sm-offset-2">
-    <span class="step-links">
-        {% if post_list.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ post_list.previous_page_number }}">previous</a>
-        {% endif %}
+<div class="col-sm-offset-8">
+  <span class="step-links">
+    {% if post_list.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ post_list.previous_page_number }}">Previous</a>
+    {% endif %}
 
-        <span class="current">
-            Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}
-        </span>
-
-        {% if post_list.has_next %}
-            <a href="?page={{ post_list.next_page_number }}">next</a>
-            <a href="?page={{ post_list.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
+    <span class="current">
+        Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}
     </span>
+
+    {% if post_list.has_next %}
+        <a href="?page={{ post_list.next_page_number }}">Next</a>
+        <a href="?page={{ post_list.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+  </span>
 </div>
+
+<h1> </h1>>
 
 {% endblock content %}
 </div>
 
 <!-- Latest compiled and minified JavaScript -->
+<script src="https://code.jquery.com/jquery-1.2.2.min.js" integrity="sha256-09D/HFXvOsiqH76j5h1VDzlQpnKeA/y/wcPvFSQbqE4=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 </html>
+
+
