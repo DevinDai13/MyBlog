@@ -6,17 +6,20 @@ from django.utils import timezone
 from django.urls import reverse
 from .models import Post
 from .forms import PostForm
+from django.db.models import Q # Q lookups
 
 
 def post_list(request):
     queryset = Post.objects.all().order_by("-timestamp") # order from most recent to oldest negative timestamp
-
-    query = request.GET.get("q")
+    query = request.GET.get("q")   # search bar
     if query:
-        queryset = queryset.filter(title__icontains=query)
+        queryset = queryset.filter(
+            Q(title__icontains=query) |  #either this or this or this
+            Q(content__icontains=query) |
+            Q(user__username__icontains=query)  #icontains only works on text field so user need to be different
+        ).distinct()
     paginator = Paginator(queryset, 5) # Show 5 per page
-    page_request_var = 'page'
-    page = request.GET.get(page_request_var)
+    page = request.GET.get("page")
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
