@@ -2,12 +2,24 @@
 
 {% block content %}
 
-<h1>Form</h1>
+<h1> </h1>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'post_list' %}">Home</a>
+        </div>    
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    </nav>
 
-<form method="POST" action=''>{% csrf_token %}
+<div class="col-sm-8 col-sm-offset-3">    
+    
+<form method="POST" action='' enctype="multipart/form-data">{% csrf_token %}
 {{form.as_p}}    
 <input type="submit" value="Post it">
 </form>
+</div>
 
 {% endblock content %}
 
